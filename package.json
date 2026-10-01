@@ -1,0 +1,12 @@
+{
+  "name": "webp-converter-app",
+  "version": "2.0.0",
+  "description": "Client-side WebP converter and studio (Cloudflare Pages ready)",
+  "main": "public/index.html",
+  "scripts": {
+    "start": "node dev.js"
+  },
+  "keywords": ["webp", "converter", "image-optimization", "client-side", "cloudflare-pages"],
+  "author": "",
+  "license": "ISC"
+}
