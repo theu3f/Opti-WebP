@@ -979,6 +979,66 @@
     color: var(--liquid-text-tertiary);
 }
 
+.card-remove-btn {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: rgba(18, 22, 34, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--liquid-text-tertiary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s var(--apple-spring);
+    z-index: 2;
+    padding: 0;
+}
+
+.card-remove-btn:hover {
+    background: rgba(255, 69, 58, 0.25);
+    border-color: rgba(255, 69, 58, 0.55);
+    color: #ff453a;
+    transform: scale(1.1);
+    box-shadow: 0 0 12px rgba(255, 69, 58, 0.3);
+}
+
+.card-actions-group {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+}
+
+.btn-card-remove {
+    color: var(--liquid-text-tertiary);
+    transition: all 0.2s var(--apple-spring);
+}
+
+.btn-card-remove:hover {
+    background: rgba(255, 69, 58, 0.15);
+    border-color: rgba(255, 69, 58, 0.35);
+    color: #ff453a;
+}
+
+.card-remove-btn:focus-visible,
+.btn-card-remove:focus-visible {
+    outline: none;
+    border-color: #ff453a;
+    box-shadow: 0 0 0 3px rgba(255, 69, 58, 0.35);
+}
+
+.liquid-asset-card.removing {
+    opacity: 0;
+    transform: scale(0.92) translateY(8px);
+    transition: opacity 0.18s ease, transform 0.18s var(--apple-spring);
+    pointer-events: none;
+}
+
 @keyframes liquidSlideIn {
     from {
         opacity: 0;

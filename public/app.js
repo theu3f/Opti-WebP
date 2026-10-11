@@ -697,6 +697,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             card.innerHTML = `
         <div class="liquid-preview-box">
+          <button type="button" class="card-remove-btn" data-id="${item.id}" title="Remove image" aria-label="Remove image">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
           <span class="preview-glass-pill">${badgeText}</span>
           <img src="${item.previewUrl}" alt="${item.convertedName}" loading="lazy" />
         </div>
@@ -710,9 +716,19 @@ document.addEventListener('DOMContentLoaded', () => {
           </div>
           <div class="liquid-card-bottom">
             <span class="card-dims">${item.width}&times;${item.height}px</span>
-            <a href="${item.previewUrl}" class="liquid-btn btn-glass-subtle btn-compact-glass" download="${item.convertedName}">
-              Download
-            </a>
+            <div class="card-actions-group">
+              <button type="button" class="liquid-btn btn-glass-subtle btn-compact-glass btn-card-remove" data-id="${item.id}" title="Remove image" aria-label="Remove image">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 6h18"></path>
+                  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6"></path>
+                  <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                </svg>
+                <span>Remove</span>
+              </button>
+              <a href="${item.previewUrl}" class="liquid-btn btn-glass-subtle btn-compact-glass" download="${item.convertedName}">
+                Download
+              </a>
+            </div>
           </div>
         </div>
       `;
@@ -733,6 +749,54 @@ document.addEventListener('DOMContentLoaded', () => {
         globalStatsBadge.style.display = 'flex';
         globalStatsText.textContent = `${convertedFiles.length} in queue \u2022 ${totalSaved >= 0 ? formatBytes(totalSaved) + ' saved' : 'Ready'}`;
     }
+
+    // Remove single file from queue
+    function removeFile(id, cardElement) {
+        const index = convertedFiles.findIndex(item => item.id === id);
+        if (index === -1) return;
+
+        const [removed] = convertedFiles.splice(index, 1);
+        if (removed && removed.previewUrl) {
+            URL.revokeObjectURL(removed.previewUrl);
+        }
+
+        if (cardElement) {
+            cardElement.classList.add('removing');
+            setTimeout(() => {
+                finalizeRemoval();
+            }, 180);
+        } else {
+            finalizeRemoval();
+        }
+    }
+
+    function finalizeRemoval() {
+        if (convertedFiles.length === 0) {
+            activeAspectRatio = null;
+            if (!widthInput.value && !heightInput.value) {
+                widthInput.placeholder = 'Auto';
+                heightInput.placeholder = 'Auto';
+            }
+        } else if (!widthInput.value && !heightInput.value) {
+            const first = convertedFiles[0];
+            activeAspectRatio = first.originalWidth / first.originalHeight;
+            widthInput.placeholder = `${first.originalWidth}`;
+            heightInput.placeholder = `${first.originalHeight}`;
+        }
+        renderResults();
+    }
+
+    // Event delegation for card remove buttons
+    cardsGrid.addEventListener('click', (e) => {
+        const removeBtn = e.target.closest('.card-remove-btn, .btn-card-remove');
+        if (removeBtn) {
+            e.preventDefault();
+            e.stopPropagation();
+            const id = removeBtn.getAttribute('data-id');
+            const card = removeBtn.closest('.liquid-asset-card');
+            removeFile(id, card);
+        }
+    });
 
     // Clear Queue
     clearBtn.addEventListener('click', () => {
