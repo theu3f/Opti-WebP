@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <!-- Background Gradient -->
+    <radialGradient id="bgGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0071e3" stop-opacity="0.35"/>
+      <stop offset="60%" stop-color="#06080e" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#06080e" stop-opacity="1"/>
+    </radialGradient>
+
+    <!-- Droplet Body Gradient -->
+    <linearGradient id="dropGrad" x1="20%" y1="0%" x2="80%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.6"/>
+      <stop offset="30%" stop-color="#00e5ff" stop-opacity="0.3"/>
+      <stop offset="70%" stop-color="#0071e3" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#30d158" stop-opacity="0.3"/>
+    </linearGradient>
+
+    <!-- Droplet Glow Filter -->
+    <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="16" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+
+    <!-- Lightning Glow Filter -->
+    <filter id="boltGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feComponentTransfer in="blur" result="brightBlur">
+        <feFuncA type="linear" slope="1.5"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode in="brightBlur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Lightning Bolt Gradient -->
+    <linearGradient id="boltGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="40%" stop-color="#00e5ff"/>
+      <stop offset="100%" stop-color="#30d158"/>
+    </linearGradient>
+
+    <!-- Specular Highlight Gradient -->
+    <linearGradient id="specular" x1="0%" y1="0%" x2="50%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.8"/>
+      <stop offset="100%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background Base -->
+  <rect width="512" height="512" rx="128" fill="#06080e"/>
+  <rect width="512" height="512" rx="128" fill="url(#bgGlow)"/>
+
+  <!-- Ambient Color Orbs -->
+  <circle cx="256" cy="340" r="140" fill="#00e5ff" opacity="0.18" filter="blur(30px)"/>
+  <circle cx="340" cy="220" r="100" fill="#5e5ce6" opacity="0.22" filter="blur(30px)"/>
+
+  <!-- Outer Glass Border for Squircle -->
+  <rect x="2" y="2" width="508" height="508" rx="126" fill="none" stroke="rgba(255,255,255,0.12)" stroke-width="3"/>
+
+  <!-- Liquid Droplet Outer Glow Aura -->
+  <path d="M 256 95 C 256 95, 375 235, 375 325 A 119 119 0 0 1 137 325 C 137 235, 256 95, 256 95 Z"
+        fill="none" stroke="#00e5ff" stroke-width="12" opacity="0.4" filter="url(#neonGlow)"/>
+
+  <!-- Liquid Droplet Translucent Glass Body -->
+  <path d="M 256 95 C 256 95, 375 235, 375 325 A 119 119 0 0 1 137 325 C 137 235, 256 95, 256 95 Z"
+        fill="url(#dropGrad)"/>
+
+  <!-- Droplet Glass Rim Highlight -->
+  <path d="M 256 95 C 256 95, 375 235, 375 325 A 119 119 0 0 1 137 325 C 137 235, 256 95, 256 95 Z"
+        fill="none" stroke="rgba(255, 255, 255, 0.4)" stroke-width="3"/>
+
+  <!-- Speed Lightning Bolt in Center -->
+  <path d="M 275 180 L 205 300 L 255 300 L 235 400 L 320 270 L 268 270 Z"
+        fill="url(#boltGrad)" filter="url(#boltGlow)"/>
+
+  <!-- Specular Light Reflection Arc -->
+  <path d="M 256 125 C 235 155, 175 240, 170 315"
+        fill="none" stroke="url(#specular)" stroke-width="9" stroke-linecap="round"/>
+</svg>
