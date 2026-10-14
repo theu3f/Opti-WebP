@@ -1,12 +1,29 @@
 {
-  "name": "webp-converter-app",
+  "name": "opti-webp",
   "version": "2.0.0",
-  "description": "Client-side WebP converter and studio (Cloudflare Pages ready)",
+  "description": "Ultra-fast, 100% client-side WebP converter and image optimizer built with liquid glassmorphism UI.",
   "main": "public/index.html",
   "scripts": {
     "start": "node dev.js"
   },
-  "keywords": ["webp", "converter", "image-optimization", "client-side", "cloudflare-pages"],
-  "author": "",
-  "license": "ISC"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/theu3f/Opti-WebP.git"
+  },
+  "keywords": [
+    "webp",
+    "converter",
+    "image-optimizer",
+    "client-side",
+    "privacy-first",
+    "zero-telemetry",
+    "cloudflare-pages",
+    "glassmorphism"
+  ],
+  "author": "U3F (PXLab)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/theu3f/Opti-WebP/issues"
+  },
+  "homepage": "https://github.com/theu3f/Opti-WebP#readme"
 }
