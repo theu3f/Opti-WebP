@@ -9,10 +9,14 @@
 </p>
 
 <p align="center">
+  <a href="https://webp.pxlab.ir/"><img src="https://img.shields.io/badge/مشاهده_آنلاین-webp.pxlab.ir-0071e3?style=flat-square&logo=google-chrome&logoColor=white" alt="نسخه آنلاین"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/مجوز-MIT-blue.svg?style=flat-square" alt="مجوز MIT"></a>
   <img src="https://img.shields.io/badge/حریم_خصوصی-۱۰۰٪_سمت_کاربر-brightgreen.svg?style=flat-square" alt="۱۰۰٪ کلاینت‌ساید">
   <img src="https://img.shields.io/badge/ردگیری-صفر-blueviolet.svg?style=flat-square" alt="بدون ردیابی">
-  <img src="https://img.shields.io/badge/استقرار-Cloudflare_Pages-orange.svg?style=flat-square" alt="آماده برای کلودفلر">
+</p>
+
+<p align="center">
+  🚀 <strong>اجرای آنلاین و تست زنده: <a href="https://webp.pxlab.ir/">https://webp.pxlab.ir</a></strong>
 </p>
 
 <p align="center">

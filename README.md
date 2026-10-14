@@ -7,10 +7,14 @@
 </p>
 
 <p align="center">
+  <a href="https://webp.pxlab.ir/"><img src="https://img.shields.io/badge/Live_Demo-webp.pxlab.ir-0071e3?style=flat-square&logo=google-chrome&logoColor=white" alt="Live Demo"></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square" alt="MIT License"></a>
   <img src="https://img.shields.io/badge/Privacy-100%25%20Client--Side-brightgreen.svg?style=flat-square" alt="100% Client-Side">
   <img src="https://img.shields.io/badge/Telemetry-Zero%20Tracking-blueviolet.svg?style=flat-square" alt="Zero Telemetry">
-  <img src="https://img.shields.io/badge/Deploy-Cloudflare%20Pages-orange.svg?style=flat-square" alt="Cloudflare Pages Ready">
+</p>
+
+<p align="center">
+  🚀 <strong>Try it live: <a href="https://webp.pxlab.ir/">https://webp.pxlab.ir</a></strong>
 </p>
 
 <p align="center">
