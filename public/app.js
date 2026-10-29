@@ -299,7 +299,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const totalChunkLen = 8 + chunkSize + (chunkSize % 2);
 
                 if (fourCC === 'VP8 ' || fourCC === 'VP8L' || fourCC === 'ALPH') {
-                    if (fourCC === 'ALPH') hasAlpha = true;
+                    if (fourCC === 'ALPH' || fourCC === 'VP8L') hasAlpha = true;
                     subChunks.push(rawWebp.subarray(offset, offset + totalChunkLen));
                 }
                 offset += totalChunkLen;
@@ -372,12 +372,15 @@ document.addEventListener('DOMContentLoaded', () => {
     async function processAnimatedGif(file, options) {
         if (typeof ImageDecoder === 'undefined') return null;
 
-        const stream = file.stream ? file.stream() : await file.arrayBuffer();
-        const decoder = new ImageDecoder({ data: stream, type: 'image/gif' });
+        const arrayBuffer = await file.arrayBuffer();
+        const decoder = new ImageDecoder({ data: arrayBuffer, type: 'image/gif' });
         await decoder.tracks.ready;
 
         const track = decoder.tracks.selectedTrack;
-        if (!track || track.frameCount <= 1) return null;
+        if (!track || track.frameCount <= 1) {
+            decoder.close();
+            return null;
+        }
 
         const frameCount = track.frameCount;
         const repetitionCount = track.repetitionCount ?? 0;
@@ -386,6 +389,10 @@ document.addEventListener('DOMContentLoaded', () => {
         let animHeight = 0;
 
         for (let i = 0; i < frameCount; i++) {
+            if (statusMessage) {
+                statusMessage.textContent = `Encoding ${file.name}: frame ${i + 1} of ${frameCount}...`;
+            }
+
             const frameResult = await decoder.decode({ frameIndex: i });
             const videoFrame = frameResult.image;
             const duration = (videoFrame.duration || 100000) / 1000; // microseconds to ms
@@ -445,6 +452,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 duration: Math.round(duration) || 100,
             });
         }
+
+        decoder.close();
 
         const animatedBuffer = muxAnimatedWebP(frames, animWidth, animHeight, repetitionCount === -1 ? 1 : 0);
         const convertedBlob = new Blob([animatedBuffer], { type: 'image/webp' });
@@ -610,6 +619,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const opts = getActiveOptions();
         const newResults = [];
 
+        let failedCount = 0;
+        let lastError = null;
+
         for (let i = 0; i < validFiles.length; i++) {
             const file = validFiles[i];
             statusMessage.textContent = `Encoding ${i + 1} of ${validFiles.length}: ${file.name}...`;
@@ -619,6 +631,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 newResults.push(result);
             } catch (err) {
                 console.error(`Failed to process ${file.name}:`, err);
+                failedCount++;
+                lastError = err;
             }
         }
 
@@ -626,6 +640,10 @@ document.addEventListener('DOMContentLoaded', () => {
             convertedFiles = [...newResults, ...convertedFiles];
             regenerateBar.style.display = 'none';
             renderResults();
+        }
+
+        if (failedCount > 0 && newResults.length === 0) {
+            alert(`Could not convert image(s): ${lastError ? lastError.message : 'Unknown error'}`);
         }
 
         conversionStatus.style.display = 'none';
